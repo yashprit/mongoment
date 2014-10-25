@@ -1,15 +1,18 @@
 'use strict'
 
-require('./server.js');
-require('./util/connection.js');
+var server = require('./server.js');
+var connection = require('./util/connection.js')
 
-process.on('uncaughtException', function (err) {
-    global.log.error('error: ', err.red);
-    global.log.info(err.stack);
-    window.alert(err);
-    return false;
-});
+module.exports = function (host, port) {
 
-var mongoInstance = loadConnection('localhost');
+	var mongoclient = connection.loadConnection(host, port)
+	var db = mongoclient.db("blog_development");
+	db.collection('categories').update({"name" : "Associations"}, {"sample" : "Associations"}, {upsert:true}, function(err, result) {
+		console.log(result);
+	})
 
-console.log(mongoInstance);
+
+
+};
+
+

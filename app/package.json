@@ -1,13 +1,25 @@
 {
   "name": "mongoment",
-  "main": "views/index.html",
+  "main": "index.html",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "engineStrict": true,
   "single-instance": true,
   "window": {
-    "toolbar": true
+    "toolbar": true,
+    "resizable": false,
+    "width": 1000,
+    "height": 600,
+    "min_width": 600,
+    "min_height": 400,
+    "max_width": 1000,
+    "max_height": 600,
+    "position": "center"
   },
-  "chromium-args": "--child-clean-exit",
   "dependencies": {
     "mongodb": "^1.4.19"
-  }
+  },
+  "chromium-args": "--child-clean-exit"
 }

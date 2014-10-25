@@ -10,9 +10,8 @@ var Db = require('mongodb').Db,
     BSON = require('mongodb').pure().BSON;
 
 
-
-  global.loadConnection = function loadConnection(host) {
-      return new MongoClient(new Server(host, 27017), {native_parser: true});
+  function loadConnection(host, port) {
+      return new MongoClient(new Server(host, port), {native_parser: true});
   }
 
   /*
@@ -43,5 +42,4 @@ var Db = require('mongodb').Db,
       });
     });
   });*/
-
-module.exports = loadConnection;
+module.exports.loadConnection = loadConnection;
