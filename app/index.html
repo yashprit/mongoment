@@ -87,33 +87,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-      (function () {
-        var gui = require('nw.gui');
-        var win = gui.Window.get();
-
-        win.on('new-win-policy', function (frame, url, policy) {
-            gui.Shell.openExternal(url);
-            policy.ignore();
-        });
-
-        process.on('uncaughtException', function (err) {
-          console.error('error: ', err.red);
-          console.info(err.stack);
-          window.alert(err);
-          return false;
-        });
-
-        $(document).ready(function(){
-            $("#saveConnection").on("click", function(){
-                var ip = $("#ip").val();
-                var port = $("#port").val();
-                require("./js/index")(ip, port);
-            });
-        });
-
-
-    })();
-    </script>
+    <script src="js/bootstrap.js"></script>
 </body>
 </html>

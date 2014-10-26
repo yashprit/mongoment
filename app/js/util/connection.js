@@ -1,3 +1,6 @@
+var Promise = require('bluebird')
+var mongodb = Promise.promisifyAll(require('mongodb'))
+
 var Db = require('mongodb').Db,
     MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server,
@@ -11,7 +14,7 @@ var Db = require('mongodb').Db,
 
 
   function loadConnection(host, port) {
-      return new MongoClient(new Server(host, port), {native_parser: true});
+      return new mongodb.MongoClient(new Server(host, port), {native_parser: true});
   }
 
   /*

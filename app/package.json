@@ -19,7 +19,8 @@
     "position": "center"
   },
   "dependencies": {
-    "mongodb": "^1.4.19"
+    "mongodb": "^1.4.19",
+    "bluebird": "^2.3.6"
   },
   "chromium-args": "--child-clean-exit"
 }
