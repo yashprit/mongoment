@@ -1,22 +1,39 @@
 {
   "name": "mongoment",
-  "version": "0.0.0",
-  "description": "",
-  "keywords": [],
-  
-    "homepage": "https://github.com/yashprit/mongoment",
-    "bugs": "https://github.com/yashprit/mongoment/issues",
-    "author": {
-      "name": "Yashprit",
-      "email": "",
-      "url": "https://github.com/yashprit"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git://github.com/yashprit/mongoment.git"
-    },
-  
-  "dependencies": {},
+  "main": "index.html",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "engineStrict": true,
+  "homepage": "https://github.com/yashprit/mongoment",
+  "bugs": "https://github.com/yashprit/mongoment/issues",
+  "author": {
+    "name": "Yashprit",
+    "email": "",
+    "url": "https://github.com/yashprit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yashprit/mongoment.git"
+  },
+  "window": {
+    "toolbar": true,
+    "resizable": false,
+    "width": 1000,
+    "height": 600,
+    "min_width": 600,
+    "min_height": 400,
+    "max_width": 1000,
+    "max_height": 600,
+    "position": "center"
+  },
+  "single-instance": true,
+  "chromium-args": "--child-clean-exit"
+  "dependencies": {
+    "mongodb": "^1.4.19",
+    "bluebird": "^2.3.6"
+  },
   "devDependencies": {
     "matchdep": "~0.1.2",
     "grunt": "~0.4.1",
@@ -27,8 +44,5 @@
     "grunt-contrib-rename": "0.0.3",
     "grunt-contrib-compress": "~0.5.3",
     "concat-files": "~0.1.0"
-  },
-  "engines": {
-    "node": ">=0.8.0"
   }
 }
