@@ -1,9 +1,0 @@
-{
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {
-    "gumby": "~2.6.4",
-    "font-awesome": "~4.3.0",
-    "jquery": "~2.1.3"
-  }
-}
