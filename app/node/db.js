@@ -1,12 +1,31 @@
 import DataStore from 'nedb';
 
-const db = new DataStore({filename: './database.json', autoload: true});
+const userCollection = new DataStore({filename: './user.json', autoload: true});
+const connectionCollection = new DataStore({filename: './connection.json', autoload: true});
 
-export default class DataSource{
+const mongomentDB = {
+  user: userCollection,
+  connection: connectionCollection
+}
 
-  _findOne(obj){
+const USER = 'user';
+
+const CONNECTION = 'cnnection';
+
+export default class DataSource {
+
+  _findOne(collection,obj){
     return new Promise((resolve, reject) => {
-      db.findOne(obj, (err, result) => {
+      mongomentDB[collection].findOne(obj, (err, result) => {
+        if(err) reject(err);
+        else resolve(result);
+      });
+    });
+  }
+
+  _find(collection){
+    return new Promise((resolve, reject) => {
+      mongomentDB[collection].find((err, result) => {
         if(err) reject(err);
         else resolve(result);
       });
@@ -15,28 +34,32 @@ export default class DataSource{
 
   _insert(obj){
     return new Promise((resolve, reject) => {
-      db.insert(obj, (err, status) => {
+      mongomentDB[collection].insert(obj, (err, status) => {
         if(err) reject(err);
         else resolve(status);
       });
     })
   }
 
+  async findAllConnections(){
+    return await this._find(CONNECTION);
+  }
+
   async findByName(username){
-    return await this._findOne({
+    return await this._findOne(USER, {
       name: username
     });
   }
 
   async checkUserPresent(username, assword){
-    return await this._findOne({
+    return await this._findOne(USER, {
       name: username,
       password: password
     })
   }
 
   async insertUser(username, email, password){
-    const doc = await this._findOne({name: username});
+    const doc = await this._findOne(USER, {name: username});
     if(doc){
       throw new Error("username already present");
     } else {
@@ -45,6 +68,21 @@ export default class DataSource{
         email: email,
         password: password
       })
+    }
+  }
+
+  async insertConnection(name, ip, port, db, options){
+    const doc = await this._findOne(CONNECTION, {name: name});
+    if(doc){
+      throw new Error("name is already present");
+    } else {
+      return await this._insert(CONNECTION, {
+        name: name,
+        ip: ip,
+        port: port,
+        db: db,
+        options: options
+      });
     }
   }
 }
