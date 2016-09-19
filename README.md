@@ -1,4 +1,4 @@
-# Mongo-UI
+# mongoment
 Native UI for MongoDB database (in development process)
 
 ## Install
