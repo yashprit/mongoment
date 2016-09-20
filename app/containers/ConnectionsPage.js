@@ -4,9 +4,10 @@ import Connections from '../components/connections';
 import * as ConnectionsActions from '../actions/connections';
 
 function mapStateToProps(state) {
-  const {list} = state.cnnections;
+	console.log(state);
+  const {connections} = state.connections;
   return {
-    list
+    connections
   };
 }
 

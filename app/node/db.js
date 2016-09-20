@@ -10,11 +10,11 @@ const mongomentDB = {
 
 const USER = 'user';
 
-const CONNECTION = 'cnnection';
+const CONNECTION = 'connection';
 
 export default class DataSource {
 
-  _findOne(collection,obj){
+  _findOne(collection, obj){
     return new Promise((resolve, reject) => {
       mongomentDB[collection].findOne(obj, (err, result) => {
         if(err) reject(err);
@@ -32,7 +32,7 @@ export default class DataSource {
     });
   }
 
-  _insert(obj){
+  _insert(collection, obj){
     return new Promise((resolve, reject) => {
       mongomentDB[collection].insert(obj, (err, status) => {
         if(err) reject(err);

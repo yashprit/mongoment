@@ -12,6 +12,7 @@ export default class Home extends Component {
           <Link to="/counter">to Counter</Link>
           <Link to="/login">to Login</Link>
           <Link to="/register">to Registration</Link>
+          <Link to="/connections">Connections</Link>
         </div>
       </div>
     );

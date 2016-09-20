@@ -29,6 +29,7 @@ node_modules
 # OSX
 .DS_Store
 
+user.json
 database.json
 
 # App packaged

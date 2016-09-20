@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-class Connetions extends Component {
+export default class Connetions extends Component {
   static propTypes = {
     list: PropTypes.array.isRequired
   };
@@ -9,5 +9,3 @@ class Connetions extends Component {
     return (<div>connections</div>);
   }
 }
-
-export default Connetions;
