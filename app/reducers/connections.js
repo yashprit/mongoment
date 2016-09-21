@@ -22,13 +22,11 @@ export default function auth(state = {
         ...state,
         error: action.payload.error
       }
-
     case CONNECTION_TEST:
       return {
         ...state,
         test: action.payload
       }
-
     default:
       return state
   }

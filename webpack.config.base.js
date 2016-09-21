@@ -9,7 +9,10 @@ export default {
     }, {
       test: /\.json$/,
       loader: 'json-loader'
-    }]
+    },{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: require.resolve('file-loader') },
+      { test: /\.(woff|woff2)$/, loader:require.resolve('url-loader')+"?prefix=font/&limit=500000" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: require.resolve('url-loader')+"?limit=500000&mimetype=application/octet-stream" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: require.resolve('url-loader')+"?limit=500000&mimetype=image/svg+xml" }]
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -17,8 +20,12 @@ export default {
     libraryTarget: 'commonjs2'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+    extensions: ['', '.js', '.jsx', '.json', '.scss'],
+    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main'],
+    modulesDirectories: [
+      'node_modules',
+      path.resolve(__dirname, './node_modules')
+    ]
   },
   plugins: [
 

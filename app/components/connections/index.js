@@ -1,35 +1,55 @@
 import React, { Component, PropTypes } from 'react';
-import {Button, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
-
-function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-}
+import {Input, Button, Link, Layout, Panel, AppBar} from 'react-toolbox';
 
 export default class Connetions extends Component {
   static propTypes = {
     connections: PropTypes.array.isRequired
   };
 
-   handleClick = () => {
-    const name = document.getElementById('name').value;
-    const ip = document.getElementById('ip').value;
-    const port = document.getElementById('port').value;
-    const db = document.getElementById('db').value;
+   state = { name: '', ip: '', multiline: '', email: '', hint: '' };
+
+   componentWillMount(){
+    this.props.list();
+   }
+
+   handleChange = (name, value) => {
+    this.setState({...this.state, [name]: value});
+   }
+
+   saveConnection = () => {
+    const {
+      name,
+      ip,
+      port,
+      db
+    } = this.state;
     this.props.save(name, ip, port, db);
   }
 
   testConnecction = () => {
-  	const name = document.getElementById('name').value;
-    const ip = document.getElementById('ip').value;
-    const port = document.getElementById('port').value;
-    const db = document.getElementById('db').value;
-    this.props.test(name, ip, port, db);
+  	const {
+      ip,
+      port,
+      db
+    } = this.state;
+    this.props.test(ip, port, db);
+  }
+
+  renderForm(){
+    return(
+      <div>
+        <Input required type='text' label='Connection Name' name='name' icon='person_outline' value={this.state.name} onChange={this.handleChange.bind(this, 'name')}/>
+        <Input required type='text' label='IP' name='ip' icon='computer' value={this.state.ip} onChange={this.handleChange.bind(this, 'ip')}/>
+        <Input required type='text' label='Port' name='port' icon='vpn_key'value={this.state.port} onChange={this.handleChange.bind(this, 'port')} hint='Default is 27071'/>
+        <Input required type='text' label='Database Name' name='db' icon='data_usage' value={this.state.db} onChange={this.handleChange.bind(this, 'db')}/>
+        <Button icon='add' label='Add Connection' flat accent onClick={this.saveConnection}/>
+        <Button icon='send' label='Test Connection' flat onClick={this.testConnecction}/>
+      </div>
+    );
+  }
+
+  renderList(){
+
   }
 
   render() {
@@ -37,39 +57,18 @@ export default class Connetions extends Component {
   		connections
   	} = this.props;
 
-  	if(connections.length > 0){
-  		return (<div>This is connections Page</div>);
-  	} else {
-  		return (
-  			<form>
-	        <FieldGroup
-	          id="name"
-	          type="text"
-	          label="Name"
-	          placeholder="Connection Name"/>
-	        <FieldGroup
-	          id="ip"
-	          type="text"
-	          label="Address"
-	          placeholder="Server Address"/>
-	        <FieldGroup
-	          id="port"
-	          type="text"
-	          label="Port"
-	          placeholder="port default is 27017"/>
-	        <FieldGroup
-	          id="db"
-	          type="text"
-	          label="Database"
-	          placeholder="Database name"/>
-	        <Button 
-	          bsStyle="primary" 
-	          onClick={this.handleClick}>Save Connection</Button>
-	        <Button 
-	          bsStyle="primary" 
-	          onClick={this.testConnection}>Test Connection</Button>
-	      </form>
-  		);
-  	}
+    console.log(this.props)
+    return(
+       <Layout>
+        <Panel>
+          <AppBar>
+            <Link href="/" label="Mongoment"/>
+          </AppBar>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
+          {connections.lenth > 0? this.renderConnection() : this.renderForm()}
+          </div>
+        </Panel>
+      </Layout>
+    )
   }
 }

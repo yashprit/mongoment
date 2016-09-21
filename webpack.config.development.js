@@ -1,7 +1,10 @@
 /* eslint max-len: 0 */
 import webpack from 'webpack';
+import path from 'path';
 import merge from 'webpack-merge';
+import autoprefixer from 'autoprefixer';
 import baseConfig from './webpack.config.base';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const port = process.env.PORT || 3000;
 
@@ -19,7 +22,7 @@ export default merge(baseConfig, {
   output: {
     publicPath: `http://localhost:${port}/dist/`
   },
-
+  //TODO:: Learn about css-loader webpack
   module: {
     loaders: [
       {
@@ -31,6 +34,12 @@ export default merge(baseConfig, {
       },
 
       {
+        test: /(\.scss)$/,
+        include : /(node_modules)\/react-toolbox/,
+        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
+      },
+
+      {
         test: /^((?!\.global).)*\.css$/,
         loaders: [
           'style-loader',
@@ -39,8 +48,13 @@ export default merge(baseConfig, {
       }
     ]
   },
-
+  postcss: [autoprefixer],
+  sassLoader: {
+    data: '@import "theme/_config.scss";',
+    includePaths: [path.resolve(__dirname, './app')]
+  },
   plugins: [
+    new ExtractTextPlugin('style.css', { allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({

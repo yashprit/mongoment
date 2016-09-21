@@ -23,9 +23,10 @@ export default class DataSource {
     });
   }
 
-  _find(collection){
+  _find(collection, obj){
     return new Promise((resolve, reject) => {
-      mongomentDB[collection].find((err, result) => {
+      mongomentDB[collection].find(obj, (err, result) => {
+        console.log(err, result);
         if(err) reject(err);
         else resolve(result);
       });
@@ -42,7 +43,7 @@ export default class DataSource {
   }
 
   async findAllConnections(){
-    return await this._find(CONNECTION);
+    return await this._find(CONNECTION, {});
   }
 
   async findByName(username){

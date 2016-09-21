@@ -13,6 +13,7 @@ export const CONNECTION_TEST = 'CONNECTION_TEST';
 
 
 function loadAllConnection(result){
+  console.log(result);
   return {
     type: CONNECTIONS_LOADED,
     payload: {
@@ -90,7 +91,6 @@ export function test(...params){
 
 export function list(){
   return async (dispatch) => {
-    dispatch(loading());
     try {
       const result = await ds.findAllConnections();
       dispatch(loadAllConnection(result));
