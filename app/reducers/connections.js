@@ -4,15 +4,15 @@ import {
   CONNECTIONS_SAVE,
   CONNECTIONS_SAVE_ERROR,
   CONNECTION_TEST
-} from '../actions/auth';
+} from '../actions/connections';
 
-export default function auth(state = {
+export default function connections(state = {
   isError: false,
   error: null,
   connections: []
 }, action){
   switch(action.type){
-    case CONNECTIONS_LOADED, CONNECTIONS_SAVE: 
+    case CONNECTIONS_LOADED: 
       return {
         ...state,
         connections: action.payload.connections

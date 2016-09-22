@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {Input, Button, Link, Layout, Panel, AppBar} from 'react-toolbox';
+import Connection from './Connection';
+import {Grid, Row, Col} from 'react-flexbox-grid';
 
 export default class Connetions extends Component {
   static propTypes = {
@@ -37,19 +39,25 @@ export default class Connetions extends Component {
 
   renderForm(){
     return(
-      <div>
+      <Row>
         <Input required type='text' label='Connection Name' name='name' icon='person_outline' value={this.state.name} onChange={this.handleChange.bind(this, 'name')}/>
         <Input required type='text' label='IP' name='ip' icon='computer' value={this.state.ip} onChange={this.handleChange.bind(this, 'ip')}/>
         <Input required type='text' label='Port' name='port' icon='vpn_key'value={this.state.port} onChange={this.handleChange.bind(this, 'port')} hint='Default is 27071'/>
         <Input required type='text' label='Database Name' name='db' icon='data_usage' value={this.state.db} onChange={this.handleChange.bind(this, 'db')}/>
         <Button icon='add' label='Add Connection' flat accent onClick={this.saveConnection}/>
         <Button icon='send' label='Test Connection' flat onClick={this.testConnecction}/>
-      </div>
+      </Row>
     );
   }
 
-  renderList(){
+  renderConnection(){
+    const connections = this.props.connections.map((value, key) => {
+      return <Col xs><Connection {...value}/></Col>
+    });
 
+    return (
+      <Row>{connections}</Row>
+    )
   }
 
   render() {
@@ -57,7 +65,7 @@ export default class Connetions extends Component {
   		connections
   	} = this.props;
 
-    console.log(this.props)
+    console.log(this.props.connections)
     return(
        <Layout>
         <Panel>
@@ -65,7 +73,9 @@ export default class Connetions extends Component {
             <Link href="/" label="Mongoment"/>
           </AppBar>
           <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
-          {connections.lenth > 0? this.renderConnection() : this.renderForm()}
+          <Grid>
+            {connections.length > 0? this.renderConnection() : this.renderForm()}
+          </Grid>
           </div>
         </Panel>
       </Layout>
