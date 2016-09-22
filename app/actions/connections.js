@@ -1,6 +1,7 @@
 import DataSource from '../node/db';
 import { push } from 'react-router-redux';
 import MongoDbConnection from '../node/mongo-client';
+import MongoDBOp from '../node/mongo-op';
 
 const ds = new DataSource();
 
@@ -13,7 +14,6 @@ export const CONNECTION_TEST = 'CONNECTION_TEST';
 
 
 function loadAllConnection(result){
-  console.log(result);
   return {
     type: CONNECTIONS_LOADED,
     payload: {
@@ -51,10 +51,24 @@ function error(type, error){
   }
 }
 
+async function getCollectionCount(){
+  const dbconfig = await ds.findAllConnections();
+      
+  return await Promise.all(dbconfig.map(async (value) => {
+    const dbConnection = await testConnection(value.ip, value.port, value.db);
+    const op = new MongoDBOp(dbConnection);
+    const count = await op.count();
+    return {
+      ...value,
+      collections: count
+    }
+  }));
+}
+
 async function testConnection(...params){
   const client = new MongoDbConnection(...params);
-  console.log(client)
-  return await client.connect();
+  const db = await client.connectByParams();
+  return db;
 }
 
 async function saveConnection(...params){
@@ -67,7 +81,7 @@ export function save(...params){
       const [name, ip, port, db] = params;
       const database = await testConnection(ip, port, port);
       const result = await saveConnection(name, ip, port, db);
-      database.close()
+      database.close();
       dispatch(connectionSave(result));
     } catch(e) {
       dispatch(error(CONNECTIONS_SAVE_ERROR, e));
@@ -92,7 +106,8 @@ export function test(...params){
 export function list(){
   return async (dispatch) => {
     try {
-      const result = await ds.findAllConnections();
+      const result = await getCollectionCount();
+      console.log("result", result)
       dispatch(loadAllConnection(result));
     } catch(e){
       dispatch(error(CONNECTIONS_LOAD_ERROR, e));

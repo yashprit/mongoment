@@ -1,20 +1,22 @@
 import React from 'react';
-import {Card,CardTitle,CardText,CardActions,Button} from 'react-toolbox';
+import {Card,CardTitle,CardText,CardActions,Button, Chip} from 'react-toolbox';
 
 const Connection = (props) => {
 
-  const uri = `mongdb://${props.ip}:${props.port}/${props.db}`
+  const uri = `mongodb://${props.ip}:${props.port}/${props.db}`
 
   return (
     <Card>
-      <CardTitle title={props.name}/>
+      <CardTitle title={props.name}>
+        <Chip>{props.collections}</Chip>
+      </CardTitle>
       <CardTitle
         title="Title goes here"
         subtitle="Subtitle here"
       />
       <CardText>{uri}</CardText>
       <CardActions>
-        <Button label="Action 1" />
+        <Button label="Connect" onClick={() => props.connectDb(uri)}/>
         <Button label="Action 2" />
       </CardActions>
     </Card>

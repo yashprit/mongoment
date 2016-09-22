@@ -2,7 +2,6 @@ import {MongoClient} from 'mongodb';
 
 export default class MongoDbConnection{
 	constructor(ip, port, database, options){
-		console.log(this.MongoClient);
 		this.ip = ip;
 		this.port = port;
 		this.options = options;
@@ -13,13 +12,21 @@ export default class MongoDbConnection{
 		return `mongodb://${this.ip}:${this.port}/${this.databaseName}`;
 	}
 
-	connect(){
-		const url = this._getConnectionString();
+	_connect(dbStr){
 		return new Promise((resolve, reject) => {
-			const mongoClient = MongoClient.connect(url, (err, db) => {
+			const mongoClient = MongoClient.connect(dbStr, (err, db) => {
 				if(err) reject(err);
 				else resolve(db);
 			});
 		});
+	}
+
+	async connectByParams(){
+		const url = this._getConnectionString();
+		return await this._connect(url);
+	}
+
+	async connectByUri(url){
+		return await this._connect(url);
 	}
 }

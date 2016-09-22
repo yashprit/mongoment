@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import {Input, Button, Link, Layout, Panel, AppBar} from 'react-toolbox';
 import Connection from './Connection';
 import {Grid, Row, Col} from 'react-flexbox-grid';
+import { withRouter } from 'react-router' 
 
-export default class Connetions extends Component {
+class Connetions extends Component {
   static propTypes = {
     connections: PropTypes.array.isRequired
   };
@@ -50,9 +51,13 @@ export default class Connetions extends Component {
     );
   }
 
+  connectDb = (uri) => {
+    this.props.router.push({pathname: '/database', query: {uri: uri}});
+  }
+
   renderConnection(){
     const connections = this.props.connections.map((value, key) => {
-      return <Col xs><Connection {...value}/></Col>
+      return <Col xs><Connection {...value} connectDb={this.connectDb}/></Col>
     });
 
     return (
@@ -65,7 +70,7 @@ export default class Connetions extends Component {
   		connections
   	} = this.props;
 
-    console.log(this.props.connections)
+    console.log(this.props)
     return(
        <Layout>
         <Panel>
@@ -82,3 +87,5 @@ export default class Connetions extends Component {
     )
   }
 }
+
+export default withRouter(Connetions);

@@ -106,6 +106,7 @@
     "autoprefixer": "^6.4.1",
     "classnames": "^2.2.5",
     "css-modules-require-hook": "^4.0.2",
+    "draft-js": "^0.9.1",
     "electron-debug": "^1.0.1",
     "flexboxgrid": "^6.3.1",
     "immutability-helper": "^2.0.0",
