@@ -16,6 +16,6 @@ export default (
     <Route path="/register" component={RegistartionPage} />
     <Route path="/connections" component={ConnectionsPage} />
     <Route path="/counter" component={CounterPage} />
-    <Route path="/database" component={DatabasePage} />
+    <Route path="/database" component={DatabasePage}/>
   </Route>
 );

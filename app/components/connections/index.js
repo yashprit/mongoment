@@ -1,15 +1,23 @@
 import React, { Component, PropTypes } from 'react';
-import {Input, Button, Link, Layout, Panel, AppBar} from 'react-toolbox';
+import {Input, Button, Link, Layout, Panel, AppBar, Dialog} from 'react-toolbox';
 import Connection from './Connection';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import { withRouter } from 'react-router' 
+import style from './connection.scss';
+
+console.log(style)
 
 class Connetions extends Component {
   static propTypes = {
     connections: PropTypes.array.isRequired
   };
 
-   state = { name: '', ip: '', multiline: '', email: '', hint: '' };
+   state = { name: '', ip: '', multiline: '', email: '', hint: '', active: false};
+
+   actions = [
+    { label: "Add Connection", icon:'add', accent: true, onClick: this.saveConnection },
+    { label: "Test Connection", icon:'send', onClick: this.testConnecction }
+  ];
 
    componentWillMount(){
     this.props.list();
@@ -41,12 +49,18 @@ class Connetions extends Component {
   renderForm(){
     return(
       <Row>
-        <Input required type='text' label='Connection Name' name='name' icon='person_outline' value={this.state.name} onChange={this.handleChange.bind(this, 'name')}/>
-        <Input required type='text' label='IP' name='ip' icon='computer' value={this.state.ip} onChange={this.handleChange.bind(this, 'ip')}/>
-        <Input required type='text' label='Port' name='port' icon='vpn_key'value={this.state.port} onChange={this.handleChange.bind(this, 'port')} hint='Default is 27071'/>
-        <Input required type='text' label='Database Name' name='db' icon='data_usage' value={this.state.db} onChange={this.handleChange.bind(this, 'db')}/>
-        <Button icon='add' label='Add Connection' flat accent onClick={this.saveConnection}/>
-        <Button icon='send' label='Test Connection' flat onClick={this.testConnecction}/>
+        <Col xs={12}>
+          <Input required type='text' label='Connection Name' name='name' icon='person_outline' value={this.state.name} onChange={this.handleChange.bind(this, 'name')}/>
+        </Col>
+        <Col xs={12}>
+          <Input required type='text' label='IP' name='ip' icon='computer' value={this.state.ip} onChange={this.handleChange.bind(this, 'ip')}/>
+        </Col>
+        <Col xs={12}>
+          <Input required type='text' label='Port' name='port' icon='vpn_key'value={this.state.port} onChange={this.handleChange.bind(this, 'port')} hint='Default is 27071'/>
+        </Col>
+        <Col xs={12}>
+          <Input required type='text' label='Database Name' name='db' icon='data_usage' value={this.state.db} onChange={this.handleChange.bind(this, 'db')}/>
+        </Col>
       </Row>
     );
   }
@@ -55,36 +69,58 @@ class Connetions extends Component {
     this.props.router.push({pathname: '/database', query: {uri: uri}});
   }
 
-  renderConnection(){
+  handleToggle = () => {
+    this.setState({active: !this.state.active});
+  }
+
+  renderWhenConnectionAvaiable(){
     const connections = this.props.connections.map((value, key) => {
       return <Col xs><Connection {...value} connectDb={this.connectDb}/></Col>
     });
 
     return (
-      <Row>{connections}</Row>
+      <Panel>
+        <AppBar>
+          <Link href="/" label="Mongoment"/>
+        </AppBar>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
+          <Grid>
+            <Row>{connections}</Row>
+            <Button icon='add' floating accent onClick={this.handleToggle}/>
+          </Grid>
+        </div>
+        <Dialog
+          actions={this.actions}
+          active={this.state.active}
+          onEscKeyDown={this.handleToggle}
+          onOverlayClick={this.handleToggle}
+          title='Add Connection'>
+          {this.renderForm()}
+        </Dialog>
+      </Panel>
+    )
+  }
+
+  renderWhenConnectionEmpty(){
+    return (
+      <div className={style['connection__empty']}>
+        <div className={style['connection__empty--add']}>
+          <Button icon='note_add' floating accent onClick={this.handleToggle}/>
+        </div>
+        <Dialog
+          actions={this.actions}
+          active={this.state.active}
+          onEscKeyDown={this.handleToggle}
+          onOverlayClick={this.handleToggle}
+          title='Add Connection'>
+          {this.renderForm()}
+        </Dialog>
+      </div>
     )
   }
 
   render() {
-  	const {
-  		connections
-  	} = this.props;
-
-    console.log(this.props)
-    return(
-       <Layout>
-        <Panel>
-          <AppBar>
-            <Link href="/" label="Mongoment"/>
-          </AppBar>
-          <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
-          <Grid>
-            {connections.length > 0? this.renderConnection() : this.renderForm()}
-          </Grid>
-          </div>
-        </Panel>
-      </Layout>
-    )
+    return this.props.connections.length > 0? this.renderWhenConnectionAvaiable() : this.renderWhenConnectionEmpty();
   }
 }
 

@@ -1,0 +1,10 @@
+.connection {
+	&__empty {
+    margin: 0 auto;
+
+    &--add{
+      position: absolute;
+      top: 40%;
+    }
+  }
+}
