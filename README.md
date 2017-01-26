@@ -6,13 +6,13 @@ Native UI for MongoDB database (in development process)
 First, clone the repo via git:
 
 ```bash
-git clone https://github.com/yashprit/mongo-ui.git mongo-ui
+git clone https://github.com/yashprit/mongoment.git mongoment
 ```
 
 And then install dependencies.
 
 ```bash
-$ cd mongo-ui && npm install
+$ cd mongoment && npm install
 ```
 
 ## Run
