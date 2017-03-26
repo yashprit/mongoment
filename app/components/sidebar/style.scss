@@ -1,0 +1,29 @@
+.sidebar {
+	background-color: #2A3F54;
+}
+
+.logo {
+	margin-bottom: 0px;
+	padding: 20px;
+}
+
+.menu {
+	padding: 0;
+}
+
+.menuSection {
+	margin-bottom: 35px;
+
+	h3 {
+		font-size: 14px;
+	}
+
+	ul {
+		margin-top: 20px;
+		list-style: none;
+
+		li {
+			cursor: pointer
+		}
+	}
+}
