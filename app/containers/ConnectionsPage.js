@@ -4,7 +4,6 @@ import Connections from '../components/connections';
 import * as ConnectionsActions from '../actions/connections';
 
 function mapStateToProps(state) {
-	console.log(state.connections);
   const {connections, isError, error} = state.connections;
   return {
     connections,

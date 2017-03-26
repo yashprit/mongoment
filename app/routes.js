@@ -9,7 +9,7 @@ import DatabasePage from './containers/DatabasePage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={HomePage} />
+    <IndexRoute component={ConnectionsPage} />
     <Route path="/connections" component={ConnectionsPage} />
     <Route path="/counter" component={CounterPage} />
     <Route path="/database" component={DatabasePage}/>

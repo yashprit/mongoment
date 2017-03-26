@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavDrawer} from 'react-toolbox';
+import {NavDrawer, FontIcon} from 'react-toolbox';
 import Style from './style';
 
 const Sidebar = (props) => {
@@ -8,6 +8,7 @@ const Sidebar = (props) => {
 			<div className={Style.sidebar}>
 				<div className={Style.logo}>
 					<a href="#">
+						<FontIcon value='flight_takeoff'/>
 						<span>Mongoment</span>
 					</a>
 				</div>
@@ -15,7 +16,12 @@ const Sidebar = (props) => {
 					<div className={Style.menuSection}>
 						<h3>Heading</h3>
 						<ul>
-							<li>Home</li>
+							<li>
+								<a>
+									<FontIcon value='turned_in_not'/>
+									<span className={Style.text}>Home</span>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
