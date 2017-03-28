@@ -2,9 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import {Input, Button, Link, Layout, Panel, AppBar, Dialog} from 'react-toolbox';
 import Header from '../header/Header';
 import Sidebar from '../sidebar';
-import ConnectionForm from './ConnectionForm';
 import Connection from './Connection';
-import {Grid, Row} from 'react-flexbox-grid';
+import {Grid, Row, Col} from 'react-flexbox-grid';
 import { withRouter } from 'react-router' 
 import style from './connection.scss';
 
@@ -13,22 +12,17 @@ class Connetions extends Component {
     connections: PropTypes.array.isRequired
   };
 
-   state = { name: '', ip: '', multiline: '', email: '', hint: '', active: false};
+  state = { name: '', ip: '', multiline: '', email: '', hint: '', active: false};
 
-   actions = [
-    { label: "Add Connection", icon:'add', accent: true, onClick: this.saveConnection },
-    { label: "Test Connection", icon:'send', onClick: this.testConnecction }
-  ];
-
-   componentWillMount(){
+  componentWillMount(){
     this.props.list();
-   }
+  }
 
-   handleChange = (name, value) => {
+  handleChange = (name, value) => {
     this.setState({...this.state, [name]: value});
-   }
+  }
 
-   saveConnection = () => {
+  saveConnection = () => {
     const {
       name,
       ip,
@@ -55,33 +49,75 @@ class Connetions extends Component {
     this.setState({active: !this.state.active});
   }
 
+  actions = [
+    { label: 'Add Connection', icon:'add', accent: true, onClick: this.saveConnection },
+    { label: 'Test Connection', icon:'send', onClick: this.testConnecction }
+  ];
+
   renderWhenConnectionAvaiable(){
     const connections = this.props.connections.map((value, key) => {
       return <Connection {...value} connectDb={this.connectDb}/>
     });
 
     return (
-      <Grid>
-        <Row>{connections}</Row>
-      </Grid>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
+        <Grid>
+          <Row>{connections}</Row>
+          <div className={style["button__add"]}>
+            <Button icon='add' label='Add Connection' accent onClick={this.handleToggle}/>
+          </div>
+        </Grid>
+      </div>
     )
   }
 
   render() {
-    return(
+    return (
       <Layout>
-        <Sidebar/>
         <Panel>
           <Header title="Connection"/>
           {this.renderWhenConnectionAvaiable()}
-          <Button icon='add' floating accent onClick={this.handleToggle}/>
           <Dialog
             actions={this.actions}
             active={this.state.active}
             onEscKeyDown={this.handleToggle}
             onOverlayClick={this.handleToggle}
             title='Add Connection'>
-            <ConnectionForm/>
+            <Row>
+              <Col xs={12}>
+                <Input required 
+                  type='text' 
+                  label='Connection Name' 
+                  name='name' 
+                  icon='person_outline' 
+                  onChange={this.handleChange.bind(this, 'name')}/>
+              </Col>
+              <Col xs={12}>
+                <Input required 
+                  type='text' 
+                  label='IP' 
+                  name='ip' 
+                  icon='computer' 
+                  onChange={this.handleChange.bind(this, 'ip')}/>
+              </Col>
+              <Col xs={12}>
+                <Input required 
+                  type='text' 
+                  label='Port' 
+                  name='port' 
+                  icon='vpn_key' 
+                  hint='Default is 27071'
+                  onChange={this.handleChange.bind(this, 'port')}/>
+              </Col>
+              <Col xs={12}>
+                <Input required 
+                  type='text' 
+                  label='Database Name' 
+                  name='db' 
+                  icon='data_usage' 
+                  onChange={this.handleChange.bind(this, 'db')}/>
+              </Col>
+            </Row>
           </Dialog>
         </Panel>
       </Layout>

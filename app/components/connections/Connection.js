@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col} from 'react-flexbox-grid';
-import {Card,CardTitle,CardText,CardActions,Button, Chip} from 'react-toolbox';
+import {Card,CardTitle,CardText,CardActions,Button, Chip, Avatar} from 'react-toolbox';
 
 const Connection = (props) => {
 
@@ -9,17 +9,13 @@ const Connection = (props) => {
   return (
     <Col xs>
       <Card>
-        <CardTitle title={props.name}>
-          <Chip>{props.collections}</Chip>
-        </CardTitle>
         <CardTitle
-          title="Title goes here"
-          subtitle="Subtitle here"
-        />
-        <CardText>{uri}</CardText>
+          title={props.name}
+          subtitle={`Total Collection are ${props.collections}`}/>
+        <CardText>Connection Path is <code>{uri}</code></CardText>
         <CardActions>
-          <Button label="Connect" onClick={() => props.connectDb(uri)}/>
-          <Button label="Action 2" />
+          <Button accent icon='insert_link' label="Connect" onClick={() => props.connectDb(uri)}/>
+          <Button icon='mode_edit' label="Edit Connection" />
         </CardActions>
       </Card>
     </Col>

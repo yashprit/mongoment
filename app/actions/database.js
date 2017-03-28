@@ -38,7 +38,6 @@ async function getAllCollection(url){
 
 export function connect(uri){
   return async (dispatch) => {
-    //dispatch(loading());
     try {
       console.log(uri)
       const result = await getAllCollection(uri);
