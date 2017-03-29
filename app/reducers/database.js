@@ -1,6 +1,7 @@
 import {
 	DATABASE_LOAD_ERROR, 
-	DATABASE_LOAD
+	DATABASE_LOAD,
+  DOCUMENT_LOADED
 } from '../actions/database';
 
 const state = {
@@ -9,7 +10,8 @@ const state = {
 }
 
 export default function database(state = {
-  collections: []
+  collections: [],
+  documents: []
 }, action){
   switch(action.type){
     case DATABASE_LOAD: 
@@ -21,6 +23,11 @@ export default function database(state = {
       return {
         ...state,
         error: action.payload.error
+      }
+    case DOCUMENT_LOADED:
+      return {
+        ...state,
+        documents: action.payload.documents
       }
     default:
       return state

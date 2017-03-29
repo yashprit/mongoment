@@ -1,0 +1,30 @@
+.content {
+	flex: 1;
+	overflow-y: auto;
+	padding: 0.5rem;
+}
+
+.editor {
+	height:350px;
+}
+
+.editorWrapper {
+	clear:both;
+}
+
+.editorControl {
+	float: left;
+}
+
+.resultWrap {
+	position: relative;
+}
+
+.panel {
+	border: 1px solid #d6d6d6;
+}
+
+.result {
+	height: 488px;
+  overflow: auto;
+}

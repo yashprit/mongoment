@@ -4,7 +4,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 const Header = (props) => {
 	return (
-		<AppBar title={props.title} leftIcon="menu">
+		<AppBar title={props.title}>
 			<Navigation type='horizontal'>
 				<FontIcon value='more_vert'/>
       </Navigation>

@@ -4,11 +4,12 @@ import Database from '../components/database';
 import * as DatabaseActions from '../actions/database';
 
 function mapStateToProps(state) {
-  const {isError, error, collections} = state.database;
+  const {isError, error, collections, documents} = state.database;
   return {
     isError,
     error,
-    collections
+    collections,
+    documents
   };
 }
 

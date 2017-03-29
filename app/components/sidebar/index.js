@@ -13,17 +13,7 @@ const Sidebar = (props) => {
 					</a>
 				</div>
 				<div className={Style.menu}>
-					<div className={Style.menuSection}>
-						<h3>Heading</h3>
-						<ul>
-							<li>
-								<a>
-									<FontIcon value='turned_in_not'/>
-									<span className={Style.text}>Home</span>
-								</a>
-							</li>
-						</ul>
-					</div>
+					{props.children}
 				</div>
 			</div>
 		</NavDrawer>
